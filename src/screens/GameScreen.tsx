@@ -54,7 +54,7 @@ export function GameScreen() {
         <img
           src="/poker-chips-3d.png"
           alt=""
-          className="pointer-events-none absolute -right-2 -top-3 h-24 w-24 rotate-6 drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
+          className="pointer-events-none absolute right-4 top-1/2 h-20 w-20 -translate-y-1/2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
         />
         <p className="text-sm font-medium text-ink-soft">Total on the table</p>
         <p className="tnum mt-1 font-display text-5xl font-semibold tracking-tight text-ink">
