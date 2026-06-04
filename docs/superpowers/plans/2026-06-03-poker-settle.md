@@ -347,15 +347,16 @@ describe("computeSettlement", () => {
   });
 
   it("flags an unbalanced game but still settles", () => {
-    // Total in = $20. Cashed out: a=$5, b=$10 => $15. Imbalance -$5.
-    const players = [player("a", [1000], 5), player("b", [1000], 10)];
+    // Total in = $20. Cashed out: a=$5 (5 chips), b=$20 (20 chips) => $25. Imbalance +$5.
+    const players = [player("a", [1000], 5), player("b", [1000], 20)];
     const s = computeSettlement(players, 100);
     expect(s.totalBoughtInCents).toBe(2000);
-    expect(s.totalCashedOutCents).toBe(1500);
+    expect(s.totalCashedOutCents).toBe(2500);
     expect(s.isBalanced).toBe(false);
-    expect(s.imbalanceCents).toBe(-500);
-    // Still produces a settlement against actual nets.
+    expect(s.imbalanceCents).toBe(500);
+    // a owes 500, b is owed 1000; one payment of 500.
     expect(s.transactions).toHaveLength(1);
+    expect(s.transactions[0]).toEqual({ fromId: "a", toId: "b", amountCents: 500 });
   });
 
   it("treats null finalChips as zero chips", () => {
