@@ -17,7 +17,7 @@ export type Action =
   | { type: "START_GAME"; name: string; centsPerChip: number; playerNames: string[] }
   | { type: "ADD_PLAYER"; name: string }
   | { type: "ADD_BUYIN"; playerId: string; cents: number }
-  | { type: "SET_FINAL_CHIPS"; playerId: string; chips: number }
+  | { type: "SET_FINAL_CHIPS"; playerId: string; chips: number | null }
   | { type: "SETTLE_GAME" }
   | { type: "DISCARD_GAME" };
 

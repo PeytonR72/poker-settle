@@ -35,7 +35,10 @@ export function SettleScreen() {
                   value={p.finalChips ?? ""}
                   onChange={(e) => {
                     const raw = e.target.value.trim();
-                    if (raw === "") return;
+                    if (raw === "") {
+                      dispatch({ type: "SET_FINAL_CHIPS", playerId: p.id, chips: null });
+                      return;
+                    }
                     const chips = Number(raw);
                     if (Number.isInteger(chips) && chips >= 0) {
                       dispatch({ type: "SET_FINAL_CHIPS", playerId: p.id, chips });

@@ -44,6 +44,14 @@ describe("gameReducer", () => {
     expect(next.activeGame!.players[1].finalChips).toBe(80);
   });
 
+  it("clears a player's final chip count back to null", () => {
+    const state = activeState();
+    const id = state.activeGame!.players[1].id;
+    const withChips = gameReducer(state, { type: "SET_FINAL_CHIPS", playerId: id, chips: 80 });
+    const cleared = gameReducer(withChips, { type: "SET_FINAL_CHIPS", playerId: id, chips: null });
+    expect(cleared.activeGame!.players[1].finalChips).toBeNull();
+  });
+
   it("settles a game: moves it to history and clears active", () => {
     const state = activeState();
     const next = gameReducer(state, { type: "SETTLE_GAME" });
