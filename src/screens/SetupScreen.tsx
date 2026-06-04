@@ -49,7 +49,7 @@ export function SetupScreen() {
         <h1 className="font-display text-4xl font-semibold tracking-tight text-ink">
           Poker Settle
         </h1>
-        <p className="mt-1.5 text-ink-soft">Settle up in seconds, not arguments.</p>
+        <p className="mt-1.5 text-ink-soft">Settle up in seconds</p>
       </header>
 
       {/* Form */}
