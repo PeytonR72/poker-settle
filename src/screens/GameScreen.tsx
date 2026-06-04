@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useStore } from "../store/gameStore";
 import { formatCents, sumCents } from "../domain/money";
 import { MoneyInput } from "../components/MoneyInput";
+import { CoinsIcon, UsersIcon, ArrowRightIcon, PlusIcon, ClockIcon } from "../components/icons";
 
 export function GameScreen() {
   const { state, dispatch } = useStore();
@@ -20,48 +21,117 @@ export function GameScreen() {
   }
 
   return (
-    <div className="mx-auto max-w-md p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">{game.name}</h1>
-        <span className="text-sm text-gray-600">{formatCents(game.centsPerChip)}/chip</span>
-      </div>
-      <p className="mb-4 text-sm text-gray-600">Pot: {formatCents(totalPot)}</p>
+    <div className="mx-auto w-full max-w-md px-5 pb-32 pt-12">
+      <header className="rise mb-5 flex items-start justify-between">
+        <div>
+          <p className="text-sm text-ink-soft">Live game</p>
+          <h1 className="font-display text-3xl font-semibold tracking-tight text-ink">
+            {game.name}
+          </h1>
+        </div>
+        <button
+          type="button"
+          onClick={() => dispatch({ type: "NAVIGATE", screen: "history" })}
+          aria-label="Past games"
+          className="icon-btn"
+        >
+          <ClockIcon className="h-5 w-5" />
+        </button>
+      </header>
 
+      {/* Pot hero */}
+      <div
+        className="rise relative mb-6 overflow-hidden rounded-3xl p-5"
+        style={{
+          background: "linear-gradient(135deg, rgba(79,157,255,0.22), rgba(47,111,224,0.08))",
+          border: "1px solid rgba(79,157,255,0.25)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(79,157,255,0.45), transparent 70%)" }}
+        />
+        <p className="text-sm font-medium text-ink-soft">Total on the table</p>
+        <p className="tnum mt-1 font-display text-5xl font-semibold tracking-tight text-ink">
+          {formatCents(totalPot)}
+        </p>
+        <div className="mt-4 flex gap-2">
+          <span className="chip">
+            <UsersIcon className="h-4 w-4" />
+            {game.players.length} players
+          </span>
+          <span className="chip tnum">
+            <CoinsIcon className="h-4 w-4" />
+            {formatCents(game.centsPerChip)}/chip
+          </span>
+        </div>
+      </div>
+
+      {/* Players */}
       <ul className="space-y-3">
-        {game.players.map((p) => (
-          <li key={p.id} className="rounded border border-gray-200 p-3">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="font-medium">{p.name}</span>
-              <span className="text-gray-700">in: {formatCents(sumCents(p.buyInsCents))}</span>
+        {game.players.map((p, i) => (
+          <li
+            key={p.id}
+            className="rise glass rounded-3xl p-4"
+            style={{ animationDelay: `${Math.min(i * 40, 240)}ms` }}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <span className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 font-semibold text-accent">
+                  {p.name.charAt(0).toUpperCase()}
+                </span>
+                <span className="font-semibold text-ink">{p.name}</span>
+              </span>
+              <span className="text-right">
+                <span className="block text-xs text-ink-faint">bought in</span>
+                <span className="tnum block font-display text-xl font-semibold text-ink">
+                  {formatCents(sumCents(p.buyInsCents))}
+                </span>
+              </span>
             </div>
             <MoneyInput
-              buttonLabel="+ add"
+              buttonLabel="Add"
               onSubmit={(cents) => dispatch({ type: "ADD_BUYIN", playerId: p.id, cents })}
             />
           </li>
         ))}
       </ul>
 
+      {/* Add player mid-game */}
       <div className="mt-4 flex gap-2">
         <input
-          className="min-h-11 flex-1 rounded border border-gray-300 px-2 py-2 text-base"
+          className="field flex-1"
           value={newPlayer}
           onChange={(e) => setNewPlayer(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addPlayer()}
-          placeholder="Add player mid-game"
+          placeholder="Add a player mid-game"
         />
-        <button type="button" className="min-h-11 rounded bg-gray-200 px-3 py-2 text-base" onClick={addPlayer}>
-          Add
+        <button
+          type="button"
+          onClick={addPlayer}
+          aria-label="Add player"
+          className="icon-btn shrink-0"
+          style={{ width: "3.25rem", height: "3.25rem", borderRadius: "1rem" }}
+        >
+          <PlusIcon className="h-5 w-5" />
         </button>
       </div>
 
-      <button
-        type="button"
-        className="mt-6 min-h-11 w-full rounded bg-emerald-600 px-4 py-3 text-base text-white"
-        onClick={() => dispatch({ type: "NAVIGATE", screen: "settle" })}
-      >
-        Settle up
-      </button>
+      {/* Sticky settle CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md px-5 pb-6">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
+          style={{ background: "linear-gradient(180deg, transparent, #060d1c 70%)" }}
+        />
+        <button
+          type="button"
+          onClick={() => dispatch({ type: "NAVIGATE", screen: "settle" })}
+          className="btn-primary relative w-full text-base"
+        >
+          Settle up
+          <ArrowRightIcon className="h-5 w-5" />
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,1 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", serif;
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #eef4ff;
+  --color-ink-soft: #9fb3d1;
+  --color-ink-faint: #6781a6;
+
+  --color-accent: #4f9dff;
+  --color-accent-deep: #2f6fe0;
+  --color-pos: #34d399;
+  --color-neg: #fb7185;
+  --color-warn: #fbbf24;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    background-color: #060d1c;
+    background-image:
+      radial-gradient(120% 80% at 15% -5%, #1b4a8f 0%, transparent 45%),
+      radial-gradient(90% 70% at 95% 8%, rgba(79, 157, 255, 0.28) 0%, transparent 42%),
+      radial-gradient(120% 90% at 50% 110%, #0c2348 0%, transparent 55%),
+      linear-gradient(180deg, #0a1830 0%, #060d1c 60%, #050a16 100%);
+    background-attachment: fixed;
+  }
+
+  /* Tabular, aligned figures everywhere money or counts appear. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+@layer components {
+  /* Frosted glass surface used for cards and panels. */
+  .glass {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+      0 18px 40px -24px rgba(0, 0, 0, 0.7);
+  }
+
+  .glass-soft {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Small pill that holds an icon + label (stat chips, meta). */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+  }
+
+  /* Primary call-to-action: bright accent, full-bleed, glowing. */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    border-radius: 1.1rem;
+    font-weight: 600;
+    color: #061224;
+    background: linear-gradient(135deg, #6db2ff 0%, var(--color-accent) 45%, var(--color-accent-deep) 100%);
+    box-shadow:
+      0 10px 30px -8px rgba(79, 157, 255, 0.6),
+      0 1px 0 0 rgba(255, 255, 255, 0.4) inset;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  }
+  .btn-primary:active {
+    transform: translateY(1px) scale(0.99);
+  }
+  .btn-primary:disabled {
+    filter: grayscale(0.5) brightness(0.7);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  /* Secondary / ghost button on glass. */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    border-radius: 1.1rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .btn-ghost:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* Circular icon button (back, bookmark, etc.). */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    color: var(--color-ink);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    transition: background 0.15s ease;
+  }
+  .icon-btn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Text input on the dark glass theme. */
+  .field {
+    width: 100%;
+    min-height: 3.25rem;
+    border-radius: 1rem;
+    padding: 0 1rem;
+    color: var(--color-ink);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .field::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .field:focus {
+    outline: none;
+    border-color: rgba(79, 157, 255, 0.7);
+    background: rgba(79, 157, 255, 0.08);
+  }
+}
+
+/* Staggered entrance used on screen mounts. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
