@@ -103,8 +103,11 @@ export function SettleScreen() {
         Who pays who
       </h2>
       {!allChipsEntered ? (
-        <div className="glass-soft rounded-2xl p-5 text-center text-sm text-ink-soft">
-          Enter every player&apos;s chip count to see the payouts.
+        <div className="glass-soft flex flex-col items-center rounded-2xl p-6 text-center">
+          <img src="/poker-table-3d.png" alt="" className="mb-3 h-24 w-24 opacity-90" />
+          <p className="text-sm text-ink-soft">
+            Enter every player&apos;s chip count to see the payouts.
+          </p>
         </div>
       ) : settlement.transactions.length === 0 ? (
         <div className="glass-soft rounded-2xl p-5 text-center text-sm text-ink-soft">

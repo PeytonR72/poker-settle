@@ -48,8 +48,13 @@ export function GameScreen() {
         }}
       >
         <div
-          className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full"
+          className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full"
           style={{ background: "radial-gradient(circle, rgba(79,157,255,0.45), transparent 70%)" }}
+        />
+        <img
+          src="/poker-chips-3d.png"
+          alt=""
+          className="pointer-events-none absolute -right-2 -top-3 h-24 w-24 rotate-6 drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
         />
         <p className="text-sm font-medium text-ink-soft">Total on the table</p>
         <p className="tnum mt-1 font-display text-5xl font-semibold tracking-tight text-ink">
