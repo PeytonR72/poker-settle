@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useStore } from "../store/gameStore";
 import { computeSettlement } from "../domain/settlement";
 import { formatCents, sumCents } from "../domain/money";
-import { ChevronLeftIcon, ChevronDownIcon, PlusIcon, ClockIcon } from "../components/icons";
+import { ChevronLeftIcon, ChevronDownIcon, PlusIcon } from "../components/icons";
 
 export function HistoryScreen() {
   const { state, dispatch } = useStore();
@@ -41,9 +41,7 @@ export function HistoryScreen() {
 
       {state.history.length === 0 ? (
         <div className="glass-soft mt-10 flex flex-col items-center rounded-3xl p-10 text-center">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-ink-faint">
-            <ClockIcon className="h-6 w-6" />
-          </div>
+          <img src="/3-cards-icon.png" alt="" className="mb-4 h-20 w-20 opacity-90" />
           <p className="font-medium text-ink">No settled games yet</p>
           <p className="mt-1 text-sm text-ink-soft">Finish a game and it&apos;ll land here.</p>
         </div>

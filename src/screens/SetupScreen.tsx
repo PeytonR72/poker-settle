@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStore } from "../store/gameStore";
 import { parseDollarsToCents } from "../domain/money";
-import { SpadeIcon, ArrowRightIcon, PlusIcon, TrashIcon, ClockIcon } from "../components/icons";
+import { ArrowRightIcon, PlusIcon, TrashIcon, ClockIcon } from "../components/icons";
 
 export function SetupScreen() {
   const { state, dispatch } = useStore();
@@ -35,8 +35,16 @@ export function SetupScreen() {
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pb-8 pt-14">
       {/* Brand */}
       <header className="rise mb-8 flex flex-col items-center text-center">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/15 text-accent ring-1 ring-accent/30">
-          <SpadeIcon className="h-7 w-7" />
+        <div className="relative mb-3">
+          <div
+            className="absolute inset-0 -z-10 blur-2xl"
+            style={{ background: "radial-gradient(circle, rgba(79,157,255,0.5), transparent 70%)" }}
+          />
+          <img
+            src="/3-cards-icon.png"
+            alt=""
+            className="h-24 w-24 drop-shadow-[0_10px_28px_rgba(0,0,0,0.55)]"
+          />
         </div>
         <h1 className="font-display text-4xl font-semibold tracking-tight text-ink">
           Poker Settle
