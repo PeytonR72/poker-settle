@@ -3,3 +3,5 @@ dist/
 .vercel/
 *.local
 .DS_Store
+dev-server.log
+.playwright-mcp/
